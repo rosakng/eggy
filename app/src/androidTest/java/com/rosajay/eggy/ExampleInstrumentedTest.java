@@ -1,4 +1,4 @@
-package com.example.eggy;
+package com.rosajay.eggy;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

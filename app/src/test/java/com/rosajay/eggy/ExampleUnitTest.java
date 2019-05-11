@@ -1,4 +1,4 @@
-package com.example.eggy;
+package com.rosajay.eggy;
 
 import org.junit.Test;
 

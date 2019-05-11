@@ -1,4 +1,4 @@
-package com.example.eggy;
+package com.rosajay.eggy;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
