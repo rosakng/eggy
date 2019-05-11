@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "212965309924",
+    "firebase_url": "https://eggy-a7662.firebaseio.com",
+    "project_id": "eggy-a7662",
+    "storage_bucket": "eggy-a7662.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212965309924:android:f90b4d81fdd2458d",
+        "android_client_info": {
+          "package_name": "com.rosajay.eggy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212965309924-j33ncsfajj25p4h32vhcrtsmavod9rgi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rosajay.eggy",
+            "certificate_hash": "0e767c3e638f0c3765f2161dfc1180a29659a5a2"
+          }
+        },
+        {
+          "client_id": "212965309924-57122ejtjndjrmgia14nt7njbl0vq47j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuL19QFSqy4jpZ8ndVwhu-NlC38kQw6as"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212965309924-57122ejtjndjrmgia14nt7njbl0vq47j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
