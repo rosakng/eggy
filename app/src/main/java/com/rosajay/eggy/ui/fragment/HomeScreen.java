@@ -41,7 +41,7 @@ public class HomeScreen extends Fragment {
         recipes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = HomeScreen.newInstance();
+                Fragment fragment = RecipesFrag.newInstance();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
             }
