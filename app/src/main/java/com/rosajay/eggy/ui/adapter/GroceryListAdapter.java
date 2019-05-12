@@ -41,8 +41,8 @@ public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.
         return items.size();
     }
 
-    public void loadItems(List<Model> tournaments) {
-        this.items = tournaments;
+    public void loadItems(List<Model> items) {
+        this.items = items;
         notifyDataSetChanged();
     }
 
