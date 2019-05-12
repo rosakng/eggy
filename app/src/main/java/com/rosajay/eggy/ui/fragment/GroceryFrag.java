@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 public class GroceryFrag extends Fragment {
-    public RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private GroceryListAdapter adapter;
     private LinearLayoutManager layoutManager;
 
