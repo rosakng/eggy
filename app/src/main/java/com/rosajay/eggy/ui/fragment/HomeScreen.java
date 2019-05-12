@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,9 @@ public class HomeScreen extends Fragment {
             public void onClick(View view) {
                 Fragment fragment = GroceryFrag.newInstance();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
+                FragmentTransaction t = fragmentManager.beginTransaction();
+                t.addToBackStack("grocery");
+                t.replace(R.id.content_main, fragment).commit();
             }
         });
 
@@ -43,7 +46,9 @@ public class HomeScreen extends Fragment {
             public void onClick(View view) {
                 Fragment fragment = RecipesFrag.newInstance();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
+                FragmentTransaction t = fragmentManager.beginTransaction();
+                t.addToBackStack("recipes");
+                t.replace(R.id.content_main, fragment).commit();
             }
         });
         return view;
