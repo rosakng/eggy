@@ -44,7 +44,6 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
             title.setText(mRecipes.getJSONArray("meals").getJSONObject(position).get("strMeal").toString());
         }catch (JSONException e){
         }
-        final Bitmap bmp;
         new GetImageByURL(image, URL).execute();
     }
 

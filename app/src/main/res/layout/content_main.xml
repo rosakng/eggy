@@ -6,5 +6,11 @@
     android:layout_height="fill_parent"
     tools:showIn="@layout/activity_main"
     tools:context=".ui.activity.MainActivity">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This screen should never be visible!" />
 </FrameLayout>
 

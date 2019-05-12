@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (count == 0) {
             super.onBackPressed();
-            //additional code
         } else {
             getSupportFragmentManager().popBackStack();
         }

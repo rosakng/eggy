@@ -5,5 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activity.MainActivity">
-    <include layout="@layout/content_main" />
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_main"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="-122dp" />
+
 </android.support.constraint.ConstraintLayout>

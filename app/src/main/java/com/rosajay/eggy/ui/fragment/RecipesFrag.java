@@ -60,9 +60,7 @@ public class RecipesFrag extends Fragment {
         view.findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = HomeScreen.newInstance();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
+                getActivity().onBackPressed();
             }
         });
         recipeRecyclerView = view.findViewById(R.id.recipesRecyclerView);
