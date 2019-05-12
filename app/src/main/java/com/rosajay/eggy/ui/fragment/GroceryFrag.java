@@ -10,13 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rosajay.eggy.R;
+import com.rosajay.eggy.ui.adapter.GroceryListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GroceryFrag extends Fragment {
     public RecyclerView recyclerView;
-    private Adapter adapter;
+    private GroceryListAdapter adapter;
     private LinearLayoutManager layoutManager;
 
     // dummy list of items to be populated manually
@@ -41,7 +42,7 @@ public class GroceryFrag extends Fragment {
         View view = inflater.inflate(R.layout.groceries_screen, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerview);
-        Adapter adapter = new Adapter();
+        GroceryListAdapter adapter = new GroceryListAdapter();
         layoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

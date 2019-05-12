@@ -1,8 +1,6 @@
-package com.rosajay.eggy.ui.fragment;
+package com.rosajay.eggy.ui.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +8,15 @@ import android.view.ViewGroup;
 import android.widget.CheckedTextView;
 
 import com.rosajay.eggy.R;
+import com.rosajay.eggy.ui.fragment.Model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.ViewHolder> {
 
     private List<Model> items = new ArrayList<>();
-    Adapter() {
+    public GroceryListAdapter() {
     }
 
     @Override
@@ -42,7 +41,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return items.size();
     }
 
-    void loadItems(List<Model> tournaments) {
+    public void loadItems(List<Model> tournaments) {
         this.items = tournaments;
         notifyDataSetChanged();
     }
