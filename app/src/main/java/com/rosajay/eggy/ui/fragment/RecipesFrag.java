@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.rosajay.eggy.R;
 import com.rosajay.eggy.ui.adapter.RecipeSearchAdapter;
@@ -38,6 +39,7 @@ public class RecipesFrag extends Fragment {
     private RecyclerView recipeRecyclerView;
     private RecipeSearchAdapter recipeSearchAdapter;
     private LinearLayoutManager layoutManager;
+    private ImageView gudetama;
     private static FragmentManager fragm;
     final private String API_URL = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
     public RecipesFrag() {
@@ -66,6 +68,7 @@ public class RecipesFrag extends Fragment {
         recipeRecyclerView = view.findViewById(R.id.recipesRecyclerView);
         recipeSearch = view.findViewById(R.id.search_recipes);
         Button clickSearch = view.findViewById(R.id.doSearch);
+        gudetama = view.findViewById(R.id.gudetama);
 
         FragmentActivity f = (FragmentActivity) (getContext()) ;
         fragm = f.getSupportFragmentManager();
@@ -150,6 +153,7 @@ public class RecipesFrag extends Fragment {
                         recipeRecyclerView.setLayoutManager(layoutManager);
                         recipeSearchAdapter = new RecipeSearchAdapter(mData);
                         recipeRecyclerView.setAdapter(recipeSearchAdapter);
+                        gudetama.setVisibility(View.GONE);
                     }
                 }catch (JSONException e){
                     e.printStackTrace();
