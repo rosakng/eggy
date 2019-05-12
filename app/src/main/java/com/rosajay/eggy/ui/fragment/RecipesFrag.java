@@ -1,9 +1,15 @@
 package com.rosajay.eggy.ui.fragment;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -26,11 +33,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class RecipesFrag extends Fragment {
-    private EditText recipeSearch;
+    private static EditText recipeSearch;
     private JSONObject mData;
     private RecyclerView recipeRecyclerView;
     private RecipeSearchAdapter recipeSearchAdapter;
     private LinearLayoutManager layoutManager;
+    private static FragmentManager fragm;
     final private String API_URL = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
     public RecipesFrag() {
 
@@ -58,11 +66,16 @@ public class RecipesFrag extends Fragment {
         recipeRecyclerView = view.findViewById(R.id.recipesRecyclerView);
         recipeSearch = view.findViewById(R.id.search_recipes);
         Button clickSearch = view.findViewById(R.id.doSearch);
+
+        FragmentActivity f = (FragmentActivity) (getContext()) ;
+        fragm = f.getSupportFragmentManager();
+
         clickSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("melon", recipeSearch.getText().toString());
                 new GetRecipesBySearch().execute();
+                hideSoftKeyboard();
             }
         });
         return view;
@@ -128,15 +141,58 @@ public class RecipesFrag extends Fragment {
 //                        data.put("titie", title);
 //                        data.put("imgURL", image);
 //                    }
+                    if (mData.get("meals").toString().equals("null")){
+                        Log.d("lamamma", "null");
+                        NoRecipesFoundDialog noRecipesFoundDialog = NoRecipesFoundDialog.newInstance();
+                        noRecipesFoundDialog.show(fragm, null);
+
+                    }else{
+                        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                        recipeRecyclerView.setLayoutManager(layoutManager);
+                        recipeSearchAdapter = new RecipeSearchAdapter(mData);
+                        recipeRecyclerView.setAdapter(recipeSearchAdapter);
+                    }
                 }catch (JSONException e){
+                    e.printStackTrace();
                 }
-                layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-                recipeRecyclerView.setLayoutManager(layoutManager);
-                recipeSearchAdapter = new RecipeSearchAdapter(mData);
-                recipeRecyclerView.setAdapter(recipeSearchAdapter);
             }
             Log.i("INFO", response);
             Log.d("response", response);
         }
+    }
+    public static class NoRecipesFoundDialog extends DialogFragment {
+        public static NoRecipesFoundDialog newInstance(){
+            NoRecipesFoundDialog fragment = new NoRecipesFoundDialog();
+            return fragment;
+        }
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            // Get the layout inflater
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View view = inflater.inflate(R.layout.no_results, null);
+            Button searchAgain = view.findViewById(R.id.search_again);
+            searchAgain.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getDialog().cancel();
+                    recipeSearch.setText("");
+                }
+            });
+
+            // Inflate and set the layout for the dialog
+            // Pass null as the parent view because its going in the dialog layout
+            builder.setView(view);
+            return builder.create();
+        }
+    }
+    private void hideSoftKeyboard(){
+        InputMethodManager inputManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        // check if no view has focus:
+        View v = ((Activity) getContext()).getCurrentFocus();
+        if (v == null)
+            return;
+
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 }
