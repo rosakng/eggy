@@ -1,5 +1,7 @@
 package com.rosajay.eggy.ui.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.google.firebase.database.DataSnapshot;
@@ -91,7 +94,7 @@ public class GroceryFrag extends Fragment {
                 String s = input.getText().toString();
                 groceryListReference.child(s).setValue("");
                 input.setText("");
-                //consider hiding the keyboard after this
+                hideSoftKeyboard();
             }
         });
 
@@ -117,5 +120,14 @@ public class GroceryFrag extends Fragment {
     private void refresh() {
         fillItems();
         adapter.loadItems(adaptedItems);
+    }
+    public void hideSoftKeyboard(){
+        InputMethodManager inputManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        // check if no view has focus:
+        View v = ((Activity) getContext()).getCurrentFocus();
+        if (v == null)
+            return;
+
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 }
