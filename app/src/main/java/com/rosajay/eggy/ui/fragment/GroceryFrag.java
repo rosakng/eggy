@@ -146,7 +146,7 @@ public class GroceryFrag extends Fragment {
         adapter.loadItems(adaptedItems);
     }
 
-    public void hideSoftKeyboard(){
+    private void hideSoftKeyboard(){
         InputMethodManager inputManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         // check if no view has focus:
         View v = ((Activity) getContext()).getCurrentFocus();
