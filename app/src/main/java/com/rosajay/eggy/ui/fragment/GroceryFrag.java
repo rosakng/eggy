@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,6 +38,8 @@ public class GroceryFrag extends Fragment {
 
     Set<String> items = new HashSet<>();
     List<Model> adaptedItems = new ArrayList<>();
+    ImageView gudetama;
+    TextView noListText;
 
     public GroceryFrag(){
     }
@@ -63,6 +67,9 @@ public class GroceryFrag extends Fragment {
             }
         });
 
+        gudetama = view.findViewById(R.id.gudetama);
+        noListText = view.findViewById(R.id.noListText);
+
         recyclerView = view.findViewById(R.id.recyclerview);
         adapter = new GroceryListAdapter();
         layoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
@@ -89,7 +96,7 @@ public class GroceryFrag extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
+                // Getting list failed, log a message
                 Log.w("ERROR", "loadString:onCancelled", databaseError.toException());
                 // ...
             }
@@ -129,8 +136,16 @@ public class GroceryFrag extends Fragment {
 
     private void refresh() {
         fillItems();
+        if(adaptedItems.size() == 0) {
+            gudetama.setVisibility(View.VISIBLE);
+            noListText.setVisibility(View.VISIBLE);
+        } else {
+            gudetama.setVisibility(View.GONE);
+            noListText.setVisibility(View.GONE);
+        }
         adapter.loadItems(adaptedItems);
     }
+
     public void hideSoftKeyboard(){
         InputMethodManager inputManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         // check if no view has focus:
