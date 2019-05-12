@@ -40,6 +40,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/recipes"
                 android:layout_width="130dp"
                 android:layout_height="68dp"
                 android:layout_weight="1"
@@ -50,6 +51,7 @@
                 android:layout_height="wrap_content"/>
 
             <Button
+                android:id="@+id/groceries"
                 android:layout_width="122dp"
                 android:layout_height="67dp"
                 android:layout_weight="1"
