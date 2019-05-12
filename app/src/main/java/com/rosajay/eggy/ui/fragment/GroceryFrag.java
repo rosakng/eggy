@@ -56,14 +56,18 @@ public class GroceryFrag extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        DatabaseReference db;
+        final DatabaseReference db;
         db = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference groceryListReference = db.child("list");
 
         ValueEventListener itemListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                items = ((HashMap<String, String>) dataSnapshot.getValue()).keySet();
+                if(dataSnapshot.getValue() != null) {
+                    items = ((HashMap<String, String>) dataSnapshot.getValue()).keySet();
+                } else {
+                    Log.d("Warning", "Nothing to show");
+                }
                 for(String s: items) {
                     Log.d("HELLOO", s);
                 }
@@ -87,6 +91,7 @@ public class GroceryFrag extends Fragment {
                 String s = input.getText().toString();
                 groceryListReference.child(s).setValue("");
                 input.setText("");
+                //consider hiding the keyboard after this
             }
         });
 
