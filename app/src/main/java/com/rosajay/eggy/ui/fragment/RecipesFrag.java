@@ -59,19 +59,15 @@ public class RecipesFrag extends Fragment {
             // Do some validation here
 
             try {
-//                String API_URL = "https://api.edamam.com/search?";
-//                String appID = "067c3b25";
-//                String apiKey = "dbfb438452bdeda0a94ee52531283a5c";
-//
-//                //URL url = new URL(API_URL + "q=" + recipeKeyWord + "&app_id=${" + appID + "}&app_key=${" + apiKey + "}");
-//                URL url = new URL("https://api.edamam.com/search?q=chicken&app_id=${067c3b25}&app_key=${dbfb438452bdeda0a94ee52531283a5c}&from=0&to=3&calories=591-722&health=alcohol-free");
-//                Log.d("melonurl", url.toString());
-//                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-//                Log.e("POOPY", Integer.toString(urlConnection.getResponseCode()));
+                String API_URL = "https://api.edamam.com/search?";
+                String appID = "067c3b25";
+                String apiKey = "15a09112973c80b1ca6ba4d5aba85ba2";
 
-                URL url = new URL(API_URL + recipeKeyWord);
+                URL url = new URL(API_URL + "q=" + recipeKeyWord + "&app_id=" + appID + "&app_key=" + apiKey);
                 Log.d("melonurl", url.toString());
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                Log.d("melonurl", Integer.toString(urlConnection.getResponseCode()));
+
                 try {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                     StringBuilder stringBuilder = new StringBuilder();
