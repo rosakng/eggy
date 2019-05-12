@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
+import android.widget.ImageButton;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.rosajay.eggy.R;
 import com.rosajay.eggy.ui.fragment.Model;
 
@@ -16,6 +19,8 @@ import java.util.List;
 public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.ViewHolder> {
 
     private List<Model> items = new ArrayList<>();
+    final DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+    final DatabaseReference groceryListReference = db.child("list");
     public GroceryListAdapter() {
     }
 
@@ -25,6 +30,7 @@ public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.
         int layoutForItem = R.layout.list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(layoutForItem, parent, false);
+
         return new ViewHolder(view);
     }
 
@@ -50,11 +56,22 @@ public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         CheckedTextView mCheckedTextView;
+        ImageButton delete;
 
         ViewHolder(View itemView) {
             super(itemView);
             mCheckedTextView = itemView.findViewById(R.id.checked_text_view);
             itemView.setOnClickListener(this);
+
+            delete = itemView.findViewById(R.id.del);
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    groceryListReference.child(items.get(getAdapterPosition()).getName()).removeValue();
+                    items.remove(getAdapterPosition());
+                    notifyDataSetChanged();
+                }
+            });
         }
 
         void bind(int position) {
