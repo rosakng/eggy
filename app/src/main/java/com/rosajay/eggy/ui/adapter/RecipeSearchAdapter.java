@@ -3,17 +3,11 @@ package com.rosajay.eggy.ui.adapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,23 +21,19 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.rosajay.eggy.R;
-import com.rosajay.eggy.ui.fragment.RecipeDetailsFragment;
-import com.rosajay.eggy.ui.fragment.RecipesFrag;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapter.ViewHolder> {
-    private JSONObject mRecipes = new JSONObject();
+    private JSONObject mRecipes;
     private static Context context;
     private static Activity mActivity;
     private static FragmentManager fragm;
-    private static String URL = "", titleString = "", ingredients = "", instructions = "";
+    private static String URL = "", titleString = "";
     public RecipeSearchAdapter(JSONObject allData) {
         this.mRecipes = allData;
     }
@@ -79,7 +69,7 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
         TextView number = holder.number;
         Button seeMore = holder.seeMore;
         final ImageView image = holder.image;
-        int numberIngredients = -1;
+        int numberIngredients;
         try{
             numberIngredients = getNumIngredients(position);
             number.setText(String.valueOf(numberIngredients));
@@ -104,7 +94,6 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
                     }
                 }
             });
-//            new GetImageByURL(image, URL).execute();
             getImageByURL(image, URL);
         }catch (JSONException e){
         }
@@ -135,35 +124,6 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
             seeMore = itemView.findViewById(R.id.see_more);
         }
 
-    }
-    private class GetImageByURL extends AsyncTask<Void, Void, String > {
-        Bitmap bmp;
-        ImageView imageView;
-        String url;
-        public GetImageByURL(ImageView imageView, String url){
-            this.imageView = imageView;
-            this.url = url;
-        }
-        protected void onPreExecute() {
-        }
-        @Override
-        protected String doInBackground(Void... urls) {
-            try {
-                InputStream in = new URL(url).openStream();
-                bmp = BitmapFactory.decodeStream(in);
-                if (bmp != null) {
-                    imageView.setImageBitmap(bmp);
-                }
-            } catch (Exception e) {
-                // log error
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-
-        }
     }
 
     private static void getImageByURL(ImageView imageView, String url){
