@@ -30,7 +30,7 @@ public class RecipeDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.recipe_details, container, false);
         TextView title = view.findViewById(R.id.recipe_title);
         ImageView recipeImage = view.findViewById(R.id.recipe_picture);
-        TextView allRecipes = view.findViewById(R.id.all_recipes);
+        TextView ingredients = view.findViewById(R.id.recipe_ingredients);
         TextView instructions = view.findViewById(R.id.recipe_instructions);
 
         return view;

@@ -22,7 +22,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.rosajay.eggy.R;
 import com.rosajay.eggy.ui.fragment.RecipeDetailsFragment;
 import com.rosajay.eggy.ui.fragment.RecipesFrag;
@@ -32,6 +35,7 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapter.ViewHolder> {
     private JSONObject mRecipes = new JSONObject();
@@ -53,6 +57,21 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
         View view = inflater.inflate(layoutForItem, parent, false);
         return new ViewHolder(view);
     }
+
+    public int getNumIngredients(int position) {
+        try {
+            for (int i=20; i>0; i--) {
+                String search = "strIngredient" + i;
+                if (!mRecipes.getJSONArray("meals").getJSONObject(position).get(search).toString().equals("null") && !mRecipes.getJSONArray("meals").getJSONObject(position).get(search).toString().equals("")) {
+                    return i;
+                }
+            }
+        } catch (JSONException e) {
+
+        }
+        return -1;
+    }
+
     @Override
     public void onBindViewHolder(RecipeSearchAdapter.ViewHolder holder, final int position) {
         final TextView title = holder.title;
@@ -61,14 +80,7 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
         final ImageView image = holder.image;
         int numberIngredients = -1;
         try{
-
-            for (int i=20; i>0; i--){
-                String search = "strIngredient"+i;
-                if (!mRecipes.getJSONArray("meals").getJSONObject(position).get(search).toString().equals("null") && !mRecipes.getJSONArray("meals").getJSONObject(position).get(search).toString().equals("")){
-                    numberIngredients = i;
-                    break;
-                }
-            }
+            numberIngredients = getNumIngredients(position);
             number.setText(String.valueOf(numberIngredients));
             URL = mRecipes.getJSONArray("meals").getJSONObject(position).get("strMealThumb").toString();
             titleString = mRecipes.getJSONArray("meals").getJSONObject(position).get("strMeal").toString();
@@ -80,6 +92,10 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
                     try{
                         String title = mRecipes.getJSONArray("meals").getJSONObject(position).get("strMeal").toString();
                         String instructions = mRecipes.getJSONArray("meals").getJSONObject(position).get("strInstructions").toString();
+                        ArrayList<String> ingredients = new ArrayList<>();
+                        for(int i = 1; i <= getNumIngredients(position); i++) {
+                            ingredients.add(mRecipes.getJSONArray("meals").getJSONObject(position).get("strIngredient"+i).toString());
+                        }
                         RecipeDetails recipeDetails = RecipeDetails.newInstance(URL, title, ingredients, instructions);
                         recipeDetails.show(fragm, null);
                     }catch (JSONException e){
@@ -151,13 +167,16 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
         String url;
         String title;
         String instructions;
-        String ingredients;
-        public static RecipeDetails newInstance(String imageUrl, String title, String ingredients, String instructions){
+        ArrayList<String> ingredients;
+        public static RecipeDetails newInstance(String imageUrl, String title, ArrayList<String> ingredients, String instructions){
             RecipeDetails fragment = new RecipeDetails();
             fragment.url=imageUrl;
             fragment.title = title;
             fragment.instructions=instructions;
             fragment.ingredients=ingredients;
+            for(String s : ingredients) {
+                Log.d("INGREDIENT", s);
+            }
             return fragment;
         }
         @Override
@@ -177,8 +196,31 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
             recipeTitle.setText(title);
             TextView recipeInstructions = view.findViewById(R.id.recipe_instructions);
             recipeInstructions.setText(instructions);
+            TextView recipeIngredients = view.findViewById(R.id.recipe_ingredients);
+            StringBuilder sb = new StringBuilder();
+            for(String s: ingredients) {
+                sb.append(s);
+                sb.append(", ");
+            }
+            sb.deleteCharAt(sb.length() - 1);
+            sb.deleteCharAt(sb.length() - 1);
+            recipeIngredients.setText(sb.toString());
             // Inflate and set the layout for the dialog
             // Pass null as the parent view because its going in the dialog layout
+            final DatabaseReference db;
+            db = FirebaseDatabase.getInstance().getReference();
+            final DatabaseReference groceryListReference = db.child("list");
+
+            view.findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    for (String s : ingredients) {
+                        groceryListReference.child(s).setValue("");
+                    }
+
+                    Toast.makeText(getContext(), "Added!", Toast.LENGTH_SHORT).show();
+                }
+            });
             builder.setView(view);
             return builder.create();
         }

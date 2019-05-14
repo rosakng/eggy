@@ -26,6 +26,15 @@
                 android:layout_height="269dp"
                 android:layout_gravity="center"
                 android:src="@drawable/no_results" />
+
+            <Button
+                android:id="@+id/add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="#fed330"
+                android:text="Add to grocery list!" />
+
             <TextView
                 android:textSize="20dp"
                 android:padding="10dp"
@@ -34,9 +43,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView
-                android:id="@+id/all_recipes"
+                android:id="@+id/recipe_ingredients"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="4dp" />
             <TextView
                 android:textSize="20dp"
                 android:padding="10dp"
@@ -47,7 +58,9 @@
             <TextView
                 android:id="@+id/recipe_instructions"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="4dp"/>
             <Button
                 android:id="@+id/close_details"
                 android:layout_margin="20dp"
@@ -55,6 +68,7 @@
                 android:background="#fed330"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
         </LinearLayout>
     </LinearLayout>
 
