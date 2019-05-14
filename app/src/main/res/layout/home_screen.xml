@@ -37,10 +37,10 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:layout_width="309dp"
-            android:layout_height="456dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="40dp"
+            android:layout_width="354dp"
+            android:layout_height="469dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="70dp"
             android:alpha="0.55"
             android:src="@drawable/squished_gudetama" />
 
