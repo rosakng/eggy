@@ -70,6 +70,8 @@ public class GroceryFrag extends Fragment {
 
         gudetama = view.findViewById(R.id.gudetama);
         noListText = view.findViewById(R.id.noListText);
+        gudetama.setVisibility(View.GONE);
+        noListText.setVisibility(View.GONE);
 
         recyclerView = view.findViewById(R.id.recyclerview);
         adapter = new GroceryListAdapter();
@@ -121,8 +123,6 @@ public class GroceryFrag extends Fragment {
                 hideSoftKeyboard();
             }
         });
-
-        refresh();
 
         return view;
     }
