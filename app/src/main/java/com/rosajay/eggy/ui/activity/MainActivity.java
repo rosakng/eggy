@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         } else {
             getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
 
     }

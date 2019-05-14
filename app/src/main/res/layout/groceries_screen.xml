@@ -18,6 +18,14 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
+    <include
+        android:id="@+id/toolbar_grocery"
+        layout="@layout/nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="389dp"
@@ -41,7 +49,7 @@
         android:layout_marginBottom="8dp"
         android:background="#ffa801"
         android:text="Add"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_grocery"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/input" />
@@ -50,10 +58,10 @@
         android:id="@+id/input"
         android:layout_width="295dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:layout_marginBottom="8dp"
         android:hint="Add to grocery list"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_grocery"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
