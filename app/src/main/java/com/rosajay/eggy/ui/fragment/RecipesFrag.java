@@ -24,6 +24,8 @@ import android.widget.ImageView;
 
 import com.rosajay.eggy.R;
 import com.rosajay.eggy.ui.adapter.RecipeSearchAdapter;
+import com.rosajay.eggy.ui.util.NavSetup;
+import com.rosajay.eggy.ui.util.Screen;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,6 +65,10 @@ public class RecipesFrag extends Fragment {
                 getActivity().onBackPressed();
             }
         });
+
+        NavSetup n = new NavSetup(view, Screen.RECIPE, getActivity().getSupportFragmentManager());
+        n.setup();
+
         recipeRecyclerView = view.findViewById(R.id.recipesRecyclerView);
         recipeSearch = view.findViewById(R.id.search_recipes);
         Button clickSearch = view.findViewById(R.id.doSearch);

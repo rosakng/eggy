@@ -24,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.rosajay.eggy.R;
 import com.rosajay.eggy.ui.adapter.GroceryListAdapter;
+import com.rosajay.eggy.ui.util.NavSetup;
+import com.rosajay.eggy.ui.util.Screen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,6 +64,9 @@ public class GroceryFrag extends Fragment {
                 getActivity().onBackPressed();
             }
         });
+
+        NavSetup n = new NavSetup(view, Screen.GROCERY, getActivity().getSupportFragmentManager());
+        n.setup();
 
         gudetama = view.findViewById(R.id.gudetama);
         noListText = view.findViewById(R.id.noListText);
