@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.rosajay.eggy.R;
 import com.rosajay.eggy.ui.util.NavSetup;
@@ -31,6 +32,9 @@ public class HomeScreen extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_screen, container, false);
+        LinearLayout ll = view.findViewById(R.id.linearLayout);
+        ll.setBackgroundResource(R.drawable.squished_gudetama);
+        ll.getBackground().setAlpha(60);
 
         NavSetup n = new NavSetup(view, Screen.HOME, getActivity().getSupportFragmentManager());
         n.setup();
