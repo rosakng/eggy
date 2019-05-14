@@ -158,6 +158,7 @@ public class RecipesFrag extends Fragment {
                         recipeSearchAdapter = new RecipeSearchAdapter(mData);
                         recipeRecyclerView.setAdapter(recipeSearchAdapter);
                         gudetama.setVisibility(View.GONE);
+                        recipeRecyclerView.scheduleLayoutAnimation();
                     }
                 }catch (JSONException e){
                     e.printStackTrace();

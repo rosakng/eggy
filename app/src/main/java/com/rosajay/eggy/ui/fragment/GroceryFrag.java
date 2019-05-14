@@ -93,6 +93,7 @@ public class GroceryFrag extends Fragment {
                     Log.d("HELLOO", s);
                 }
                 refresh();
+                recyclerView.scheduleLayoutAnimation();
             }
 
             @Override
