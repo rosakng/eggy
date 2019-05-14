@@ -1,18 +1,31 @@
 package com.rosajay.eggy.ui.adapter;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rosajay.eggy.R;
+import com.rosajay.eggy.ui.fragment.RecipeDetailsFragment;
+import com.rosajay.eggy.ui.fragment.RecipesFrag;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,29 +35,61 @@ import java.net.URL;
 
 public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapter.ViewHolder> {
     private JSONObject mRecipes = new JSONObject();
+    private static Context context;
+    private static Activity mActivity;
+    private static FragmentManager fragm;
+    private static String URL = "", titleString = "", ingredients = "", instructions = "";
     public RecipeSearchAdapter(JSONObject allData) {
         this.mRecipes = allData;
     }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        context = parent.getContext();
+        FragmentActivity f = (FragmentActivity) (context) ;
+        fragm = f.getSupportFragmentManager();
         int layoutForItem = R.layout.recipe_result;
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(layoutForItem, parent, false);
-
         return new ViewHolder(view);
     }
     @Override
-    public void onBindViewHolder(RecipeSearchAdapter.ViewHolder holder, int position) {
-        TextView title = holder.title;
-        String URL = "";
+    public void onBindViewHolder(RecipeSearchAdapter.ViewHolder holder, final int position) {
+        final TextView title = holder.title;
+        TextView number = holder.number;
+        Button seeMore = holder.seeMore;
         final ImageView image = holder.image;
+        int numberIngredients = -1;
         try{
+
+            for (int i=20; i>0; i--){
+                String search = "strIngredient"+i;
+                if (!mRecipes.getJSONArray("meals").getJSONObject(position).get(search).toString().equals("null") && !mRecipes.getJSONArray("meals").getJSONObject(position).get(search).toString().equals("")){
+                    numberIngredients = i;
+                    break;
+                }
+            }
+            number.setText(String.valueOf(numberIngredients));
             URL = mRecipes.getJSONArray("meals").getJSONObject(position).get("strMealThumb").toString();
-            title.setText(mRecipes.getJSONArray("meals").getJSONObject(position).get("strMeal").toString());
+            titleString = mRecipes.getJSONArray("meals").getJSONObject(position).get("strMeal").toString();
+            title.setText(titleString);
+
+            seeMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try{
+                        String title = mRecipes.getJSONArray("meals").getJSONObject(position).get("strMeal").toString();
+                        String instructions = mRecipes.getJSONArray("meals").getJSONObject(position).get("strInstructions").toString();
+                        RecipeDetails recipeDetails = RecipeDetails.newInstance(URL, title, ingredients, instructions);
+                        recipeDetails.show(fragm, null);
+                    }catch (JSONException e){
+
+                    }
+                }
+            });
+            new GetImageByURL(image, URL).execute();
         }catch (JSONException e){
         }
-        new GetImageByURL(image, URL).execute();
     }
 
     @Override
@@ -61,11 +106,15 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private ImageView image;
+        private TextView number;
+        private Button seeMore;
 
         ViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.recipe_title);
             image = itemView.findViewById(R.id.recipe_picture);
+            number = itemView.findViewById(R.id.number);
+            seeMore = itemView.findViewById(R.id.see_more);
         }
 
     }
@@ -91,6 +140,47 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
                 // log error
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+        }
+    }
+    public static class RecipeDetails extends DialogFragment {
+        String url;
+        String title;
+        String instructions;
+        String ingredients;
+        public static RecipeDetails newInstance(String imageUrl, String title, String ingredients, String instructions){
+            RecipeDetails fragment = new RecipeDetails();
+            fragment.url=imageUrl;
+            fragment.title = title;
+            fragment.instructions=instructions;
+            fragment.ingredients=ingredients;
+            return fragment;
+        }
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            // Get the layout inflater
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View view = inflater.inflate(R.layout.recipe_details, null);
+            Button closeDetails = view.findViewById(R.id.close_details);
+            closeDetails.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getDialog().cancel();
+                }
+            });
+            TextView recipeTitle = view.findViewById(R.id.recipe_title);
+            recipeTitle.setText(title);
+            TextView recipeInstructions = view.findViewById(R.id.recipe_instructions);
+            recipeInstructions.setText(instructions);
+            // Inflate and set the layout for the dialog
+            // Pass null as the parent view because its going in the dialog layout
+            builder.setView(view);
+            return builder.create();
         }
     }
 }

@@ -14,20 +14,54 @@
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/recipe_title"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="285dp"
-        android:layout_height="33dp"
+        android:layout_height="121dp"
         android:layout_marginTop="4dp"
-        android:background="#fdcb6e"
         android:gravity="center_horizontal"
         android:padding="5dp"
-        android:text="Title"
-        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/recipe_picture"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/recipe_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fdcb6e"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="Title"
+            android:textSize="15dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:layout_marginRight="5dp"
+                android:text="# of Ingredients:"
+                android:textSize="15dp" />
+            <TextView
+                android:id="@+id/number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:text="#"
+                android:textSize="15dp" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/see_more"
+            android:layout_marginTop="3dp"
+            android:text="Eggy!"
+            android:background="#fed330"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

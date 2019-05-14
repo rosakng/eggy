@@ -3,6 +3,7 @@ package com.rosajay.eggy.ui.fragment;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.rosajay.eggy.R;
@@ -56,8 +58,8 @@ public class RecipesFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recipes_screen, container, false);
-
-        view.findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+        ImageButton back = view.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getActivity().onBackPressed();
@@ -82,7 +84,6 @@ public class RecipesFrag extends Fragment {
         return view;
     }
     private class GetRecipesBySearch extends AsyncTask<Void, Void, String > {
-
         protected void onPreExecute() {
             Log.d("lamamma","lamammama");
         }
