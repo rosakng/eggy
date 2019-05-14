@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.rosajay.eggy.R;
 import com.rosajay.eggy.ui.fragment.RecipeDetailsFragment;
 import com.rosajay.eggy.ui.fragment.RecipesFrag;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -103,7 +104,8 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
                     }
                 }
             });
-            new GetImageByURL(image, URL).execute();
+//            new GetImageByURL(image, URL).execute();
+            getImageByURL(image, URL);
         }catch (JSONException e){
         }
     }
@@ -162,6 +164,10 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
         protected void onPostExecute(String s) {
 
         }
+    }
+
+    private static void getImageByURL(ImageView imageView, String url){
+        Picasso.with(context).load(url).into(imageView);
     }
     public static class RecipeDetails extends DialogFragment {
         String url;

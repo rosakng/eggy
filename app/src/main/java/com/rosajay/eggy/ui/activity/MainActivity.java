@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         Fragment fragment = HomeScreen.newInstance();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
+        fragmentManager.beginTransaction().add(R.id.content_main, fragment).commit();
     }
 
     @Override
