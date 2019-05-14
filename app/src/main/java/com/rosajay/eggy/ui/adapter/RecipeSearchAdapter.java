@@ -162,6 +162,8 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
             recipeTitle.setText(title);
             TextView recipeInstructions = view.findViewById(R.id.recipe_instructions);
             recipeInstructions.setText(instructions);
+            ImageView imageView = view.findViewById(R.id.recipe_image);
+            Picasso.with(context).load(url).into(imageView);
             TextView recipeIngredients = view.findViewById(R.id.recipe_ingredients);
             StringBuilder sb = new StringBuilder();
             for(String s: ingredients) {

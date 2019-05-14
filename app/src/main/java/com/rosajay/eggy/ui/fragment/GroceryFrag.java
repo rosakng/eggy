@@ -84,16 +84,21 @@ public class GroceryFrag extends Fragment {
         ValueEventListener itemListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                int previousCount = adapter.getItemCount();
                 if(dataSnapshot.getValue() != null) {
                     items = ((HashMap<String, String>) dataSnapshot.getValue()).keySet();
                 } else {
                     Log.d("Warning", "Nothing to show");
+                    items = new HashSet<>();
                 }
                 for(String s: items) {
                     Log.d("HELLOO", s);
                 }
                 refresh();
-                recyclerView.scheduleLayoutAnimation();
+                //if only one item was added or removed, don't animate
+                if(Math.abs(previousCount - adapter.getItemCount()) == 1) {
+                    recyclerView.scheduleLayoutAnimation();
+                }
             }
 
             @Override
