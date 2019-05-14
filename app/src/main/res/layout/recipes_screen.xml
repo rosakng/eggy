@@ -69,8 +69,9 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recipesRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="502dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layoutAnimation="@anim/layout_animation_fall_down" />
     </LinearLayout>
 
     <ImageView
