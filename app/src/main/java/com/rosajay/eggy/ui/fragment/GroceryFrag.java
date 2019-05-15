@@ -86,28 +86,30 @@ public class GroceryFrag extends Fragment {
         ValueEventListener itemListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                int previousCount = adapter.getItemCount();
+                Set<String> newData = new HashSet<>();
                 if(dataSnapshot.getValue() != null) {
-                    items = ((HashMap<String, String>) dataSnapshot.getValue()).keySet();
+                    newData = ((HashMap<String, String>) dataSnapshot.getValue()).keySet();
                 } else {
                     Log.d("Warning", "Nothing to show");
-                    items = new HashSet<>();
                 }
-                for(String s: items) {
-                    Log.d("HELLOO", s);
-                }
-                refresh();
-                //if only one item was added or removed, don't animate
-                if(Math.abs(previousCount - adapter.getItemCount()) == 1) {
+
+                //only animate if more than 1 item was added or removed
+                if(Math.abs(items.size() - newData.size()) != 1) {
                     recyclerView.scheduleLayoutAnimation();
                 }
+
+                items = newData;
+                // log the list from db
+//                for(String s: items) {
+//                    Log.d("HELLOO", s);
+//                }
+                refresh();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Getting list failed, log a message
                 Log.w("ERROR", "loadString:onCancelled", databaseError.toException());
-                // ...
             }
         };
 
@@ -128,8 +130,8 @@ public class GroceryFrag extends Fragment {
     }
 
     private void fillItems() {
-        int i = 0;
         adaptedItems.clear();
+        int i = 0;
         for (String s: items) {
             Model model = new Model();
             model.setPosition(i+1);

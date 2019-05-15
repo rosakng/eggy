@@ -21,6 +21,7 @@ public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.
     private List<Model> items = new ArrayList<>();
     final DatabaseReference db = FirebaseDatabase.getInstance().getReference();
     final DatabaseReference groceryListReference = db.child("list");
+
     public GroceryListAdapter() {
     }
 
