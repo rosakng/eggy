@@ -42,6 +42,7 @@ public class GroceryFrag extends Fragment {
     List<Model> adaptedItems = new ArrayList<>();
     ImageView gudetama;
     TextView noListText;
+    View loading;
 
     public GroceryFrag(){
     }
@@ -72,6 +73,8 @@ public class GroceryFrag extends Fragment {
         noListText = view.findViewById(R.id.noListText);
         gudetama.setVisibility(View.GONE);
         noListText.setVisibility(View.GONE);
+
+        loading = view.findViewById(R.id.loading);
 
         recyclerView = view.findViewById(R.id.recyclerview);
         adapter = new GroceryListAdapter();
@@ -126,6 +129,7 @@ public class GroceryFrag extends Fragment {
             }
         });
 
+        recyclerView.scheduleLayoutAnimation();
         return view;
     }
 
@@ -152,6 +156,7 @@ public class GroceryFrag extends Fragment {
             gudetama.setVisibility(View.GONE);
             noListText.setVisibility(View.GONE);
         }
+        loading.setVisibility(View.GONE);
         adapter.loadItems(adaptedItems);
     }
 
