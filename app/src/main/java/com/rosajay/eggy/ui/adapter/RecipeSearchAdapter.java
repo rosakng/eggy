@@ -83,11 +83,12 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
                     try{
                         String title = mRecipes.getJSONArray("meals").getJSONObject(position).get("strMeal").toString();
                         String instructions = mRecipes.getJSONArray("meals").getJSONObject(position).get("strInstructions").toString();
+                        String urlString = mRecipes.getJSONArray("meals").getJSONObject(position).get("strMealThumb").toString();
                         ArrayList<String> ingredients = new ArrayList<>();
                         for(int i = 1; i <= getNumIngredients(position); i++) {
                             ingredients.add(mRecipes.getJSONArray("meals").getJSONObject(position).get("strIngredient"+i).toString());
                         }
-                        RecipeDetails recipeDetails = RecipeDetails.newInstance(URL, title, ingredients, instructions);
+                        RecipeDetails recipeDetails = RecipeDetails.newInstance(urlString, title, ingredients, instructions);
                         recipeDetails.show(fragm, null);
                     }catch (JSONException e){
 
