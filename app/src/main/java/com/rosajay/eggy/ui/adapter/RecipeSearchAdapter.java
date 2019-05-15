@@ -115,6 +115,7 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
                         String recipeId = mRecipes.getJSONArray("meals").getJSONObject(position).get("idMeal").toString();
                         String title = mRecipes.getJSONArray("meals").getJSONObject(position).get("strMeal").toString();
                         String instructions = mRecipes.getJSONArray("meals").getJSONObject(position).get("strInstructions").toString();
+                        String urlString = mRecipes.getJSONArray("meals").getJSONObject(position).get("strMealThumb").toString();
                         ArrayList<String> ingredients = new ArrayList<>();
 
                         Boolean isFavourite = favouriteRecipes.contains(recipeId);
@@ -123,6 +124,7 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
                             ingredients.add(mRecipes.getJSONArray("meals").getJSONObject(position).get("strIngredient"+i).toString());
                         }
                         RecipeDetails recipeDetails = RecipeDetails.newInstance(recipeId, URL, title, ingredients, instructions, isFavourite);
+
                         recipeDetails.show(fragm, null);
                     }catch (JSONException e){
 
