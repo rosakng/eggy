@@ -1,2 +1,2 @@
 # eggy
-honeycanupleasepickupsomeeggsonyourwayhomefromwork?
+Android Grocery Management App
